@@ -1,0 +1,18 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-select = [
+  "Q", # flake8-quotes
+  "I", # isort
+  "C90", # {name} is too complex
+  "RUF100", # Unused noqa (auto-fixable)
+  "T20", # print detected
+]
+src = ["."]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  ".",
+  "src"
+]
+asyncio_mode = "auto"

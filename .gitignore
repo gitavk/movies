@@ -1,0 +1,14 @@
+# IDEs & Python stuff
+__pycache__/
+*.pyc
+venv
+
+# Tests
+htmlcov
+.coverage
+.pytest_cache
+.ruff_cache
+
+# Credentials & data
+.env
+sql_app.db

@@ -1,0 +1,11 @@
+# Python stuff
+*.py[cod]
+/.pytest_cache/
+/.ruff_cache/
+/.cache/
+__pycache__/
+venv
+
+# Credentials & data
+.env
+.coverage*

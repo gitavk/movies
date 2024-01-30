@@ -8,4 +8,8 @@ until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U "$POSTGRES_USER" $
   sleep 1
 done
 
+# load data base with check
 PYTHONPATH="." python src/scripts/init_db.py 
+
+# run application
+python -m uvicorn src.main:app --host 0.0.0.0 --reload 

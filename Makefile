@@ -29,7 +29,7 @@ up-app:
 	$(dc) up -d
 
 db-shell:
-	$(dc) exec apidb psql -h localhost -U $(POSTGRES_USER) -d $(POSTGRES_DB)
+	$(dc) exec moviedb psql -h localhost -U $(POSTGRES_USER) -d $(POSTGRES_DB)
 
 run-tests:
 	$(dc) -f compose.test.yml up --abort-on-container-exit

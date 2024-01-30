@@ -12,3 +12,4 @@ htmlcov
 # Credentials & data
 .env
 sql_app.db
+raw/

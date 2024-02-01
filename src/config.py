@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pydantic import PostgresDsn, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -6,6 +8,9 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
     PROJECT_NAME: str
     API_KEY: str
+    API_URL: str = "http://www.omdbapi.com/"
+    API_URL_ID: str = API_URL + "?i={imd_id}&pot=full&apikey={API_KEY}"
+    API_URL_TITLE: str = API_URL + "?t={title}&pot=full&apikey={API_KEY}"
 
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -26,5 +31,8 @@ class Settings(BaseSettings):
         )
         return str(conn_dsn)
 
+
+IDS_SOURCE = Path("ids.txt")
+RAW_PATH = Path("omdbapi.txt")
 
 settings = Settings()

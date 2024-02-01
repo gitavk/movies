@@ -9,3 +9,7 @@ class MovieSchema(BaseModel):
     imdbid: str
     created_at: dt.datetime
     data: dict[str, Any]
+
+
+class MovieRequestSchema(BaseModel):
+    title: str

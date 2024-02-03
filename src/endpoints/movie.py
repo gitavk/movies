@@ -1,8 +1,9 @@
 from typing import Any
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
 
 import src.crud.movie as crud
+from src.auth.user import get_current_user_is_admin
 from src.endpoints.deps import SessionDep
 from src.schemas.movie import MovieRequestSchema, MovieSchema
 
@@ -27,3 +28,8 @@ def get_movie(session: SessionDep, imdbid: str) -> Any:
 @router.post("/", response_model=MovieSchema, status_code=status.HTTP_201_CREATED)
 def upload(session: SessionDep, request: MovieRequestSchema) -> Any:
     return crud.upload(session, request)
+
+
+@router.delete("/{imdbid}", dependencies=[Depends(get_current_user_is_admin)], status_code=status.HTTP_204_NO_CONTENT)
+def delete(session: SessionDep, imdbid: str):
+    crud.delete(session, imdbid)

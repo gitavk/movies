@@ -22,6 +22,14 @@ def get_one(db: Session, imdbid: str) -> Movie:
     return db_obj
 
 
+def delete(db: Session, imdbid: str) -> Movie:
+    db_obj = db.get(Movie, imdbid)
+    if not db_obj:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found")
+    db.delete(db_obj)
+    db.commit()
+
+
 def get_by_title(db: Session, title: str) -> Movie:
     try:
         return db.query(Movie).filter(Movie.data["Title"].astext == title).one()

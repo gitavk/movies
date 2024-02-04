@@ -22,9 +22,9 @@ services:
       - "8000:8000"
     env_file:
       .env
-    volumes:
-      - .:/app
-      - ./docker-files/start.sh:/app/start.sh
+    # volumes:
+    #   - .:/app
+    #   - ./docker-files/start.sh:/app/start.sh
 
 volumes:
   pg-data-core-controller:

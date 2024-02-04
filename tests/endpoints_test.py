@@ -62,3 +62,36 @@ def test_upload(fake_crud, test_client):
     assert resp.status_code == 201
     resp = test_client.post("/", json={"title": "Green Book"})
     assert resp.status_code == 409
+
+
+def test_token(test_client):
+    form_data = {"username": "admin", "password": "admin"}
+    resp = test_client.post("/token", data=form_data, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    assert "access_token" in resp.json()
+    assert resp.status_code == 200
+
+
+def test_token_exc(test_client):
+    form_data = {"username": "admin", "password": "wrong_pass"}
+    resp = test_client.post("/token", data=form_data, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    assert resp.status_code == 401
+
+
+def test_delete(fake_crud, test_client):
+    form_data = {"username": "admin", "password": "admin"}
+    resp = test_client.post("/token", data=form_data, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    headers = {"Authorization": f'Bearer {resp.json()["access_token"]}'}
+    resp = test_client.delete("/tt1305826", headers=headers)
+    assert resp.status_code == 204
+    resp = test_client.delete("/tt1305826", headers=headers)
+    assert resp.status_code == 404
+
+
+def test_delete_exc(test_client):
+    resp = test_client.delete("/tt1305826", headers={})
+    assert resp.status_code == 401
+    assert resp.json() == {"detail": "Not authenticated"}
+    headers = {"Authorization": "Bearer randomstring"}
+    resp = test_client.delete("/tt1305826", headers=headers)
+    assert resp.status_code == 401
+    assert resp.json() == {"detail": "Could not validate credentials"}

@@ -78,6 +78,12 @@ class FakeMovieCrud:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found")
 
     @staticmethod
+    def delete(_, imdbid):
+        item = FakeMovieCrud.FakeDB.pop(imdbid, None)
+        if not item:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Movie not found")
+
+    @staticmethod
     def upload(_, request):
         data = {}
         for eitem in FakeMovieCrud.ExtraData:

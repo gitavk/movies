@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
     PROJECT_NAME: str
     API_KEY: str
+    IDS_LIMIT: int = 30
     API_URL: str = "http://www.omdbapi.com/"
     API_URL_ID: str = API_URL + "?i={imd_id}&pot=full&apikey={API_KEY}"
     API_URL_TITLE: str = API_URL + "?t={title}&pot=full&apikey={API_KEY}"

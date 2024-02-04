@@ -3,14 +3,12 @@ import json
 import random
 from logging import getLogger
 
-from src.config import IDS_SOURCE, RAW_PATH
+from src.config import IDS_SOURCE, RAW_PATH, settings
 from src.db.engine import Base, SessionLocal, engine
 from src.db.models import Movie
 from src.sources.omdbapi import request_api
 
 LOGGER = getLogger(__file__)
-
-IDS_LIMIT = 30
 
 
 async def init_db():
@@ -36,7 +34,7 @@ async def main():
     with IDS_SOURCE.open() as ids_src:
         ids = [x.strip() for x in ids_src.readlines()]
         random.shuffle(ids)
-        ids = ids[:IDS_LIMIT]
+        ids = ids[: settings.IDS_LIMIT]
         await request_api(ids)
 
     await init_db()
